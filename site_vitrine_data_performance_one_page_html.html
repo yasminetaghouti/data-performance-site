@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data Performance – Prestations & Matching Data</title>
+  <meta name="description" content="Data Performance : accompagnement data de bout en bout – stratégie, ingénierie, BI/IA, et optimisation de la performance." />
+  <meta name="theme-color" content="#0f766e" />
+  <meta property="og:title" content="Data Performance – Conseil & Ingénierie Data" />
+  <meta property="og:description" content="Data Performance : accompagnement data de bout en bout – stratégie, ingénierie, BI/IA, et optimisation de la performance." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.votre-domaine.tld/" />
+  <style>
+    :root{
+      --brand:#0f766e;           /* Couleur principale */
+      --brand-600:#0b5e57;       /* Variante plus sombre */
+      --bg:#0b1220;              /* Fond (mode sombre par défaut) */
+      --bg-elev:#0f172a;         /* Cartes */
+      --fg:#e5e7eb;              /* Texte */
+      --muted:#94a3b8;           /* Texte secondaire */
+      --accent:#22d3ee;          /* Accent léger */
+      --ring:rgba(34,211,238,.35);
+      --ok:#16a34a; --warn:#f59e0b; --err:#ef4444;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#ffffff; --bg-elev:#f8fafc; --fg:#0f172a; --muted:#475569; }
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;scroll-behavior:smooth;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji"}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;height:auto}
+    .container{width:min(1120px,92vw);margin-inline:auto}
+    .btn{display:inline-flex;gap:.6rem;align-items:center;padding:.8rem 1.1rem;border-radius:.9rem;background:var(--brand);color:white;font-weight:600;border:1px solid transparent;transition:.2s}
+    .btn:hover{background:var(--brand-600);transform:translateY(-1px)}
+    .btn.ghost{background:transparent;border-color:color-mix(in oklab, var(--brand) 60%, white 40%)}
+    .chip{display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;padding:.35rem .6rem;border-radius:999px;background:color-mix(in oklab, var(--brand) 25%, transparent 75%);border:1px solid color-mix(in oklab, var(--brand) 50%, transparent)}
+    .grid{display:grid;gap:1.2rem}
+    .card{background:var(--bg-elev);border:1px solid color-mix(in oklab, var(--fg) 10%, transparent);padding:1.2rem;border-radius:1.25rem}
+    .muted{color:var(--muted)}
+    .title{font-weight:800;letter-spacing:-.01em}
+    h1.title{font-size:clamp(2rem,3vw+1.6rem,3.2rem);line-height:1.1;margin:.4rem 0 1rem}
+    h2.title{font-size:clamp(1.4rem,2.2vw+1rem,2rem);margin:0 0 .6rem}
+    h3{margin:.4rem 0}
+    section{padding:4rem 0}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50;background:linear-gradient(to bottom, color-mix(in oklab,var(--bg),transparent 0%), color-mix(in oklab,var(--bg),transparent 100%));backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid color-mix(in oklab, var(--fg) 8%, transparent)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding: .6rem 0}
+    .brand{display:flex;align-items:center;gap:.7rem;font-weight:800}
+    .logo{width:34px;height:34px;border-radius:10px;background:radial-gradient( circle at 30% 30%, var(--accent), var(--brand));display:grid;place-items:center;color:#001314;font-weight:900}
+    nav ul{display:flex;gap:1rem;list-style:none;padding:0;margin:0}
+    .mobile-toggle{display:none}
+    @media (max-width:900px){
+      nav ul{display:none}
+      .mobile-toggle{display:inline-flex}
+      .mobile-menu{position:fixed;inset:60px 0 auto 0;background:var(--bg);border-bottom:1px solid color-mix(in oklab, var(--fg) 10%, transparent);display:none}
+      .mobile-menu.open{display:block}
+      .mobile-menu a{display:block;padding:1rem 1.6rem;border-top:1px dashed color-mix(in oklab, var(--fg) 10%, transparent)}
+    }
+
+    /* Hero */
+    .hero{display:grid;gap:1.8rem;grid-template-columns: 1.2fr .8fr;align-items:center}
+    .hero .visual{aspect-ratio:4/3;border-radius:1.3rem;background:linear-gradient(135deg, color-mix(in oklab, var(--brand) 35%, transparent), color-mix(in oklab, var(--accent) 25%, transparent));border:1px solid color-mix(in oklab, var(--fg) 10%, transparent);position:relative;overflow:hidden}
+    .spark{position:absolute;inset:auto 8% 8% auto;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:1rem;padding:1rem;backdrop-filter:blur(6px)}
+    .kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:.6rem}
+    .kpi .card{text-align:center}
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+    }
+
+    /* Logos */
+    .logos{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2rem;opacity:.8;overflow:auto;padding-bottom:.5rem}
+
+    /* Services */
+    .service{display:grid;grid-template-columns: .9fr 1.1fr;gap:2rem;align-items:center}
+    @media (max-width:900px){.service{grid-template-columns:1fr}}
+
+    /* Steps */
+    .steps{counter-reset:step}
+    .steps .card{position:relative;padding-left:4rem}
+    .steps .card::before{counter-increment:step;content:counter(step);position:absolute;left:1rem;top:1rem;width:2rem;height:2rem;display:grid;place-items:center;border-radius:999px;background:var(--brand);color:white;font-weight:800}
+
+    /* Pricing / CTA */
+    .pricing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .pricing .card{display:grid;align-content:start;gap:.7rem}
+    .price{font-size:2rem;font-weight:800}
+    @media (max-width:900px){.pricing{grid-template-columns:1fr}}
+
+    /* Footer */
+    footer{border-top:1px solid color-mix(in oklab, var(--fg) 10%, transparent);padding:2rem 0}
+    .fine{font-size:.9rem}
+
+    /* Utilities */
+    .row{display:flex;gap:.8rem;flex-wrap:wrap}
+    .center{text-align:center}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .ring:focus{outline:none;box-shadow:0 0 0 6px var(--ring)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#home" class="brand ring">
+        <span class="logo" aria-hidden>Δ</span>
+        <span>Data Performance</span>
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul>
+          <li><a href="#accueil">Accueil</a></li>
+          <li><a href="#prestation">Prestation</a></li>
+          <li><a href="#matching">Matching</a></li>
+          <li><a href="#apropos">À propos</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="btn ghost mobile-toggle ring" aria-controls="mobilemenu" aria-expanded="false">Menu</button>
+      </nav>
+    </div>
+    <div id="mobilemenu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu mobile">
+      <a href="#accueil">Accueil</a>
+      <a href="#prestation">Prestation</a>
+      <a href="#matching">Matching</a>
+      <a href="#apropos">À propos</a>
+      <a href="#blog">Blog</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main id="home" class="container" style="padding-top:2rem">
+    <section id="accueil" class="hero">
+      <div>
+        <span class="chip">Cabinet & Matchmaking Data</span>
+        <h1 class="title">De la donnée à l'impact – <span style="color:var(--accent)">Data Performance</span></h1>
+        <p class="muted">Nous aidons les équipes produits, métiers et directions à exploiter leurs données : architecture moderne, gouvernance pragmatique, analytics & IA appliquée. Livrables opérationnels, résultats mesurables.</p>
+        <div class="row" style="margin-top:1rem">
+          <a class="btn ring" href="#contact">Nous contacter</a>
+          <a class="btn ghost ring" href="#services">Découvrir nos offres</a>
+        </div>
+        <div class="kpi">
+          <div class="card"><div class="title">+35%</div><div class="muted">ROI moyen data/BI</div></div>
+          <div class="card"><div class="title">72h</div><div class="muted">pour 3 profils qualifiés</div></div>
+          <div class="card"><div class="title">A→Z</div><div class="muted">Prestation & Matching</div></div>
+        </div><div class="muted">ROI moyen data/BI</div></div>
+          <div class="card"><div class="title">8 semaines</div><div class="muted">pour un premier impact</div></div>
+          <div class="card"><div class="title">A→Z</div><div class="muted">Stratégie à delivery</div></div>
+        </div>
+      </div>
+      <div class="visual">
+        <div class="spark">
+          <strong>Score Qualité Data</strong>
+          <p class="muted" style="margin:.2rem 0 0">+12% après normalisation & monitoring</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Logos clients" style="padding-top:0">
+      <div class="logos" title="Exemples de secteurs">
+        <div class="muted">Énergie</div>
+        <div class="muted">Banque</div>
+        <div class="muted">Retail</div>
+        <div class="muted">Industrie</div>
+        <div class="muted">Santé</div>
+        <div class="muted">Public</div>
+      </div>
+    </section>
+
+    <section id="prestation">
+      <div class="service">
+        <div>
+          <h2 class="title">Prestation</h2>
+          <p class="muted">Accompagnement projet data de bout en bout : cadrage, architecture, ingénierie, BI/IA et run. Engagement sur livrables et résultats.</p>
+          <div class="row" style="margin-top:1rem"><a class="btn ring" href="#contact">Soumettre mon projet</a></div>
+        </div>
+        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+          <div class="card">
+            <h3>Discovery (2 semaines)</h3>
+            <p class="muted">Objectifs, KPI, périmètre V1, backlog priorisé.</p>
+          </div>
+          <div class="card">
+            <h3>Delivery Sprint</h3>
+            <p class="muted">Pipelines, modèles, dashboards – revue hebdo.</p>
+          </div>
+          <div class="card">
+            <h3>Qualité & Gouvernance</h3>
+            <p class="muted">Catalogue, traçabilité, monitoring & SLO.</p>
+          </div>
+          <div class="card">
+            <h3>Transfert & Run</h3>
+            <p class="muted">Documentation utile et montée en compétences.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="matching">
+      <div class="grid" style="grid-template-columns: .9fr 1.1fr">
+        <div>
+          <h2 class="title">Matching</h2>
+          <p class="muted">Sourcing ciblé, qualification technique & soft skills, shortlist rapide. Vous choisissez, on sécurise l’intégration.</p>
+          <ul>
+            <li>Brief clair (techno, mission, contexte)</li>
+            <li>Pré-qualification technique & cas pratique</li>
+            <li>Présentation <em>scorecard</em> et dispo</li>
+          </ul>
+        </div>
+        <div class="grid steps">
+          <div class="card"><strong>1. Brief</strong><p class="muted">Objectifs, stack, livrables, budget.</p></div>
+          <div class="card"><strong>2. Sourcing</strong><p class="muted">Réseau & recherche active.</p></div>
+          <div class="card"><strong>3. Shortlist</strong><p class="muted">3 profils max sous 72h.</p></div>
+          <div class="card"><strong>4. Démarrage</strong><p class="muted">Onboarding & suivi.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="apropos">
+      <h2 class="title">À propos</h2>
+      <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div class="card">
+          <strong>Énergie – Prévision</strong>
+          <p class="muted">Amélioration de la précision de +7% via features météo & nettoyage outliers.</p>
+        </div>
+        <div class="card">
+          <strong>Retail – Pricing</strong>
+          <p class="muted">Optimisation marge +3% grâce à l'élasticité et à l'automatisation hebdo.</p>
+        </div>
+        <div class="card">
+          <strong>Banque – Qualité</strong>
+          <p class="muted">Catalogage et règles de validation – baisse des incidents de 28%.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="equipe">
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+        <div class="card">
+          <strong>Article 1 (exemple)</strong>
+          <p class="muted">Teaser de votre billet de blog. Lien vers Medium/Hashnode/WordPress si besoin.</p>
+        </div>
+        <div class="card">
+          <strong>Article 2 (exemple)</strong>
+          <p class="muted">Un second extrait pour montrer la section Blog.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog">
+      <h2 class="title">Blog</h2>
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+        <div class="card">
+          <strong>Combien de temps pour un premier livrable ?</strong>
+          <p class="muted">Entre 2 et 4 semaines pour un POC utile ; 6 à 12 semaines pour un flux en production.</p>
+        </div>
+        <div class="card">
+          <strong>Travaillez‑vous avec nos équipes ?</strong>
+          <p class="muted">Oui : co‑construction, transfert et documentation sont inclus par défaut.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="grid" style="grid-template-columns: 1fr 1fr">
+        <div>
+          <h2 class="title">Contact</h2>
+          <p class="muted">Parlez‑nous de vos objectifs data. Réponse sous 24h ouvrées.</p>
+          <div class="card">
+            <p><strong>Email :</strong> contact@data-performance.tld</p>
+            <p><strong>Téléphone :</strong> +33 6 12 34 56 78</p>
+            <p><strong>Adresse :</strong> Paris • France</p>
+          </div>
+        </div>
+        <form class="card" id="contactForm" novalidate>
+          <label>Nom<br>
+            <input class="ring" name="name" required placeholder="Votre nom" style="width:100%;padding:.8rem;border-radius:.7rem;border:1px solid color-mix(in oklab, var(--fg) 12%, transparent);background:transparent;color:var(--fg)">
+          </label>
+          <label>Email<br>
+            <input class="ring" type="email" name="email" required placeholder="vous@exemple.com" style="width:100%;padding:.8rem;border-radius:.7rem;border:1px solid color-mix(in oklab, var(--fg) 12%, transparent);background:transparent;color:var(--fg)">
+          </label>
+          <label>Message<br>
+            <textarea class="ring" name="message" required rows="5" placeholder="Parlez‑nous de votre besoin" style="width:100%;padding:.8rem;border-radius:.7rem;border:1px solid color-mix(in oklab, var(--fg) 12%, transparent);background:transparent;color:var(--fg)"></textarea>
+          </label>
+          <div class="row">
+            <label class="chip"><input type="checkbox" required> <span>J'accepte la politique de confidentialité</span></label>
+          </div>
+          <button class="btn" type="submit">Envoyer</button>
+          <p id="formMsg" class="muted" role="status" aria-live="polite" style="margin:0"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container row" style="justify-content:space-between;align-items:center">
+      <div class="fine">© <span id="y"></span> Data Performance • Tous droits réservés</div>
+      <div class="row fine">
+        <a href="#" class="muted">Mentions légales</a>
+        <a href="#" class="muted">Confidentialité</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Année dynamique
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Menu mobile
+    const toggle = document.querySelector('.mobile-toggle');
+    const menu = document.getElementById('mobilemenu');
+    toggle?.addEventListener('click',()=>{
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded','false');
+    }));
+
+    // Validation de formulaire (démo front‑only)
+    const form = document.getElementById('contactForm');
+    const msg = document.getElementById('formMsg');
+    form?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      if(!form.checkValidity()){
+        msg.textContent = 'Merci de compléter les champs requis.';
+        msg.style.color = getComputedStyle(document.documentElement).getPropertyValue('--warn');
+        return;
+      }
+      // Ici : envoyez vers votre backend ou un service formulaire (Formspree/Netlify Forms)
+      msg.textContent = 'Message envoyé ! (démo)';
+      msg.style.color = getComputedStyle(document.documentElement).getPropertyValue('--ok');
+      form.reset();
+    });
+  </script>
+
+  <!-- Données structurées (Organization) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Data Performance",
+    "url": "https://www.votre-domaine.tld/",
+    "logo": "https://www.votre-domaine.tld/logo.png",
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "contact@data-performance.tld",
+      "telephone": "+33612345678",
+      "areaServed": "FR"
+    }]
+  }
+  </script>
+</body>
+</html>
